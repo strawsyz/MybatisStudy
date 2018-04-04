@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="logImpl" value="LOG4J"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
+
+	<!-- 配置别名，使得设置resultType时，可以直接使用类名，省略包名 -->
+	<typeAliases>
+		<package name="tk.mybatis.simple.model"/>
+	</typeAliases>
+	<typeHandlers>
+		<typeHandler handler="tk.mybatis.simple.type.EnabledTypeHandler"
+			javaType="tk.mybatis.simple.type.Enabled"/>
+	</typeHandlers>
+	<plugins>
+		<plugin interceptor="tk.mybatis.simple.plugin.PageInterceptor">
+			<property name="dialect" value="tk.mybatis.simple.plugin.MySqlDialect"/>
+		</plugin>
+	</plugins>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC">
+				<property name="" value=""/>
+			</transactionManager>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/mybatis?useSSL=false"/>
+				<property name="username" value="root"/>
+				<property name="password" value="syz123456"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<mappers>
+		<!-- 注意！同一个xml不能加载两次
+		<mapper resource="tk/mybatis/simple/mapper/CountryMapper.xml"/>
+		 -->
+		<!-- 更加简便的加载方法 -->
+		<package name="tk.mybatis.simple.mapper"/>
+	</mappers>
+	
+
+
+</configuration>
